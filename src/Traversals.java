@@ -129,6 +129,13 @@ public class Traversals {
    * @return the number of unique values in the tree, or 0 if the tree is null
    */
   public static int countDistinctValues(TreeNode<Integer> node) {
+    if (node == null) {
+      return 0;
+    }
+
+    countDistinctValues(node.left);
+    countDistinctValues(node.right);
+
     return 0;
   }
 
@@ -143,6 +150,25 @@ public class Traversals {
    *         otherwise
    */
   public static boolean hasStrictlyIncreasingPath(TreeNode<Integer> node) {
+    if (node == null) {
+      return false;
+    }
+
+    boolean left = hasStrictlyIncreasingPath(node.left);
+    boolean right = hasStrictlyIncreasingPath(node.right);
+
+    if (node.left == null && node.right == null) {
+      return true;
+    }
+
+    if (left && node.value < node.left.value) {
+      return true;
+    }
+
+    if (right && node.value < node.right.value) {
+      return true;
+    }
+
     return false;
   }
 
