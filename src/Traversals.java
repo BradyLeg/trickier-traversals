@@ -87,7 +87,38 @@ public class Traversals {
    *         the tree is null
    */
   public static <T> List<T> collectLevelOrderValues(TreeNode<T> node) {
-    return null;
+    List<T> valList = new ArrayList<>();
+    if (node == null) {
+      return valList;
+    }
+
+    valList.add(node.value);
+    List<T> left = collectLevelOrderValues(node.left);
+    List<T> right = collectLevelOrderValues(node.right);
+
+    List<T> longerList;
+    List<T> shorterList;
+    if (left.size() >= right.size()) {
+      longerList = left;
+      shorterList = right;
+    } else if (left.size() < right.size()) {
+      longerList = right;
+      shorterList = left;
+    } else {
+      longerList = null;
+      shorterList = null;
+    }
+
+    if (longerList != null) {
+      for (int i = 0; i < longerList.size(); i++) {
+        valList.add(longerList.get(i));
+        if (shorterList != null && i < shorterList.size()) {
+          valList.add(shorterList.get(i));
+        }
+      }
+    }
+
+    return valList;
   }
 
   /**
