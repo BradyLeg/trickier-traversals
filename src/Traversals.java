@@ -133,10 +133,23 @@ public class Traversals {
       return 0;
     }
 
-    countDistinctValues(node.left);
-    countDistinctValues(node.right);
+    return countDistinctHelper(node).size();
+  }
 
-    return 0;
+  public static Set<Integer> countDistinctHelper(TreeNode<Integer> node) {
+    Set<Integer> distinctInts = new HashSet<>();
+    if (node == null) {
+      return distinctInts;
+    }
+
+    Set<Integer> left = countDistinctHelper(node.left);
+    Set<Integer> right = countDistinctHelper(node.right);
+
+    distinctInts.addAll(left);
+    distinctInts.addAll(right);
+    distinctInts.add(node.value);
+
+    return distinctInts;
   }
 
   /**
